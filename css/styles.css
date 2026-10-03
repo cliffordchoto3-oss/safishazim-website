@@ -1,0 +1,406 @@
+/* Safisha Industries — company website
+   Brand: #018284 teal / #980203 maroon, Manrope (headings) + Source Sans 3 (body)
+   Matches the palette already shipped in Safisha Business Hub (the invoicing app). */
+
+:root{
+  --teal:#018284;
+  --teal-dark:#016567;
+  --teal-soft:#E4F3F3;
+  --maroon:#980203;
+  --maroon-dark:#7A0102;
+  --maroon-soft:#FBEAEA;
+  --ink:#16211F;
+  --ink-soft:#4B5A57;
+  --line:#E3E9E7;
+  --surface:#FFFFFF;
+  --bg:#F7FAF9;
+  --radius:14px;
+  --shadow: 0 6px 24px rgba(22,33,31,0.08);
+  --maxw:1140px;
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Source Sans 3", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{
+  font-family:"Manrope", ui-sans-serif, system-ui, sans-serif;
+  color:var(--ink);
+  line-height:1.22;
+  margin:0 0 0.5em;
+}
+h1{ font-size:clamp(30px,5vw,46px); font-weight:800; }
+h2{ font-size:clamp(24px,3.4vw,32px); font-weight:800; }
+h3{ font-size:19px; font-weight:700; }
+p{ margin:0 0 1em; color:var(--ink-soft); }
+a{ color:var(--teal); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+img{ max-width:100%; display:block; }
+ul{ margin:0; padding:0; list-style:none; }
+.container{ max-width:var(--maxw); margin:0 auto; padding:0 20px; }
+.section{ padding:64px 0; }
+.section.tight{ padding:40px 0; }
+.section.alt{ background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.eyebrow{
+  display:inline-block; text-transform:uppercase; letter-spacing:.08em;
+  font-size:12.5px; font-weight:700; color:var(--maroon); margin-bottom:10px;
+}
+.lede{ font-size:18px; max-width:640px; }
+.center{ text-align:center; margin-left:auto; margin-right:auto; }
+
+/* Buttons */
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:12px 22px; border-radius:999px; font-weight:700; font-size:15px;
+  border:1.5px solid transparent; cursor:pointer; white-space:nowrap;
+}
+.btn.primary{ background:var(--teal); color:#fff; }
+.btn.primary:hover{ background:var(--teal-dark); text-decoration:none; }
+.btn.outline{ background:transparent; border-color:var(--teal); color:var(--teal); }
+.btn.outline:hover{ background:var(--teal-soft); text-decoration:none; }
+.btn.maroon{ background:var(--maroon); color:#fff; }
+.btn.maroon:hover{ background:var(--maroon-dark); text-decoration:none; }
+.btn.ghost{ background:#fff; border-color:var(--line); color:var(--ink); }
+.btn.ghost:hover{ background:var(--bg); text-decoration:none; }
+.btn-row{ display:flex; flex-wrap:wrap; gap:12px; }
+
+/* Header / nav */
+header#site-header{
+  position:sticky; top:0; z-index:50;
+  background:rgba(255,255,255,0.92);
+  -webkit-backdrop-filter:saturate(180%) blur(8px);
+  backdrop-filter:saturate(180%) blur(8px);
+  border-bottom:1px solid var(--line);
+}
+/* backdrop-filter on an ancestor creates a new containing block for
+   position:fixed descendants, which would trap the fixed mobile nav panel
+   below inside the (short) header instead of letting it cover the viewport.
+   Drop it below the breakpoint where that panel is used. */
+@media (max-width:860px){
+  header#site-header{ -webkit-backdrop-filter:none; backdrop-filter:none; background:#fff; }
+}
+.nav-wrap{ display:flex; align-items:center; justify-content:space-between; padding:12px 20px; max-width:var(--maxw); margin:0 auto; }
+.brandmark{ display:flex; align-items:center; gap:10px; }
+.brandmark img{ width:40px; height:40px; border-radius:50%; }
+.brandmark .name{ font-family:"Manrope",sans-serif; font-weight:800; font-size:18px; line-height:1.1; color:var(--ink); }
+.brandmark .tag{ font-size:11.5px; color:var(--maroon); font-weight:600; letter-spacing:.01em; }
+nav.mainnav{ display:flex; align-items:center; gap:28px; }
+nav.mainnav a{ color:var(--ink); font-weight:600; font-size:15px; }
+nav.mainnav a.active{ color:var(--teal); }
+nav.mainnav a:hover{ color:var(--teal); text-decoration:none; }
+.nav-cta{ display:flex; align-items:center; gap:10px; }
+.menu-toggle{
+  display:none; background:none; border:1.5px solid var(--line); border-radius:10px;
+  width:42px; height:42px; align-items:center; justify-content:center; cursor:pointer;
+}
+.menu-toggle svg{ width:20px; height:20px; }
+
+@media (max-width:860px){
+  nav.mainnav{
+    position:fixed; inset:64px 0 0 0; background:#fff; flex-direction:column;
+    align-items:flex-start; padding:22px 24px; gap:4px; transform:translateX(100%);
+    transition:transform .22s ease; overflow-y:auto;
+  }
+  nav.mainnav.open{ transform:translateX(0); }
+  nav.mainnav a{ padding:12px 0; width:100%; border-bottom:1px solid var(--line); font-size:16px; }
+  .nav-cta .btn span.long{ display:none; }
+  .menu-toggle{ display:flex; }
+}
+@media (max-width:480px){
+  .nav-wrap{ padding:10px 14px; }
+  .brandmark .tag{ display:none; }
+  .brandmark .name{ font-size:15.5px; }
+  .brandmark img{ width:34px; height:34px; }
+  .nav-cta .btn{ padding:9px 14px; font-size:13.5px; }
+}
+
+/* Hero — a slow-rotating collage of product photos (clustered across all
+   three catalogue categories) behind a brand-colour gradient, the same
+   technique as the category banners on the Products page, scaled up.
+   Inspired by nemchem.co.zm's full-bleed rotating hero. */
+.hero{
+  position:relative; overflow:hidden; isolation:isolate; color:#fff;
+  border-bottom:1px solid var(--line);
+}
+/* A fixed 4x3 (3x4 on mobile) mosaic grid, always fully tiled regardless of
+   viewport size. Each tile shows its product photo whole — background-size:
+   contain, not cover — so nothing gets cropped into an unrecognisable zoomed
+   sliver; a white tile background matches the photos' own white backdrops so
+   the letterboxing is invisible. */
+.hero-bg{
+  position:absolute; inset:0; z-index:-2;
+  display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(3,1fr);
+  gap:2px; background:rgba(255,255,255,0.1);
+}
+@media (max-width:900px){
+  .hero-bg{ grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(4,1fr); }
+}
+.hero-bg-cell{ position:relative; overflow:hidden; background:#fff; }
+.hero-bg-cell span{
+  position:absolute; inset:0; background-size:contain; background-position:center; background-repeat:no-repeat;
+  opacity:0; animation-name:hero-rotate; animation-timing-function:ease-in-out; animation-iteration-count:infinite;
+}
+.hero::before{
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:linear-gradient(120deg, rgba(1,87,89,0.74) 0%, rgba(1,130,132,0.6) 42%, rgba(122,1,2,0.66) 100%);
+}
+@keyframes hero-rotate{
+  0%{ opacity:0; } 4%{ opacity:1; } 24%{ opacity:1; } 30%{ opacity:0; } 100%{ opacity:0; }
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-bg-cell span{ animation:none; opacity:0; }
+  .hero-bg-cell span:first-child{ opacity:1; }
+}
+
+.hero-grid{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:48px; align-items:center; padding:72px 0 64px; position:relative; z-index:1; }
+@media (max-width:900px){ .hero-grid{ grid-template-columns:1fr; padding:44px 0 36px; } }
+.hero h1{ color:#fff; }
+.hero .lede{ color:rgba(255,255,255,0.9); }
+.hero .btn.outline{ border-color:#fff; color:#fff; }
+.hero .btn.outline:hover{ background:rgba(255,255,255,0.14); }
+
+.hero-badge{
+  display:inline-flex; align-items:center; gap:9px; background:rgba(255,255,255,0.14); color:#fff;
+  font-weight:700; font-size:13px; padding:7px 16px 7px 12px; border-radius:999px; margin-bottom:18px;
+  border:1px solid rgba(255,255,255,0.32); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+}
+.hero-badge .dot{ width:8px; height:8px; border-radius:50%; background:#4ADE80; flex-shrink:0; box-shadow:0 0 0 3px rgba(74,222,128,0.25); }
+.hero-art{
+  background:rgba(255,255,255,0.98); border:1px solid rgba(255,255,255,0.6); border-radius:24px; padding:28px;
+  box-shadow:0 24px 60px rgba(8,20,18,0.3); display:flex; flex-direction:column; align-items:center; gap:18px; text-align:center;
+}
+/* Fluid size instead of a fixed 150px — shrinks on narrow windows, caps out
+   on wide ones. js/main.js watches this element's rendered size and re-tunes
+   the ripple filter below to match, so the wave stays proportional at any size. */
+.hero-art img{ width:clamp(92px, 15vw, 150px); height:auto; aspect-ratio:1/1; }
+.hero-art .swatch-row{ display:flex; gap:10px; }
+.hero-art .swatch{ width:26px; height:26px; border-radius:50%; }
+
+/* Waving logo — the SVG filter (defined inline next to the image) supplies
+   the cloth-like ripple; this adds a slow, gentle sway on top so the whole
+   badge reads as a flag moving in the breeze, not just a rippling texture. */
+.hero-logo-wave{
+  filter:url(#wave-flag);
+  animation:flag-sway 4s ease-in-out infinite;
+  transform-origin:38% 50%;
+}
+@keyframes flag-sway{
+  0%   { transform:skewY(0deg)    rotate(0deg)    scaleY(1); }
+  12.5%{ transform:skewY(1.6deg)  rotate(0.8deg)  scaleY(1.01); }
+  25%  { transform:skewY(2.8deg)  rotate(1.4deg)  scaleY(1.02); }
+  37.5%{ transform:skewY(1.6deg)  rotate(0.8deg)  scaleY(1.01); }
+  50%  { transform:skewY(0deg)    rotate(0deg)    scaleY(1); }
+  62.5%{ transform:skewY(-1.6deg) rotate(-0.8deg) scaleY(0.99); }
+  75%  { transform:skewY(-2.8deg) rotate(-1.4deg) scaleY(0.98); }
+  87.5%{ transform:skewY(-1.6deg) rotate(-0.8deg) scaleY(0.99); }
+  100% { transform:skewY(0deg)    rotate(0deg)    scaleY(1); }
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-logo-wave{ animation:none; filter:none; }
+}
+
+.hero-shine-tag{
+  font-style:italic;
+  color:var(--maroon);
+  margin-top:4px;
+}
+
+/* Cards */
+.grid{ display:grid; gap:22px; }
+.grid.cols-3{ grid-template-columns:repeat(3,1fr); }
+.grid.cols-2{ grid-template-columns:repeat(2,1fr); }
+@media (max-width:860px){ .grid.cols-3, .grid.cols-2{ grid-template-columns:1fr; } }
+
+.card{
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px; transition:box-shadow .15s ease, transform .15s ease;
+}
+.card:hover{ box-shadow:var(--shadow); transform:translateY(-2px); }
+.card .icon{
+  width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+  margin-bottom:16px; background:var(--teal-soft); color:var(--teal);
+}
+.card .icon.maroon{ background:var(--maroon-soft); color:var(--maroon); }
+.card .icon svg{ width:24px; height:24px; }
+.card h3{ margin-bottom:6px; }
+.card p{ font-size:14.5px; margin-bottom:0; }
+.card a.card-link{ font-weight:700; font-size:14px; display:inline-block; margin-top:12px; }
+
+/* Product cards (smaller, denser grid) */
+.product-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+@media (max-width:900px){ .product-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:560px){ .product-grid{ grid-template-columns:1fr; } }
+.product-card{
+  background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:18px;
+  transition:box-shadow .15s ease, transform .15s ease;
+}
+.product-card:hover{ box-shadow:var(--shadow); transform:translateY(-2px); }
+.product-img-wrap{
+  margin:-18px -18px 14px; border-radius:12px 12px 0 0; overflow:hidden;
+  background:#fff; aspect-ratio:4/3; display:flex; align-items:center; justify-content:center;
+  border-bottom:1px solid var(--line);
+}
+.product-img{ width:100%; height:100%; object-fit:contain; object-position:center; padding:8px; }
+.product-card h4{
+  font-family:"Manrope",sans-serif; font-weight:800; font-size:14.5px; letter-spacing:.01em;
+  color:var(--teal-dark); text-transform:uppercase; margin:0 0 8px;
+}
+.product-card p{ font-size:13.6px; margin:0; color:var(--ink-soft); }
+.product-card .spec{ margin-top:10px; font-size:12.3px; color:#7c8b87; border-top:1px dashed var(--line); padding-top:8px; }
+.product-card[hidden]{ display:none; }
+
+/* Product search */
+.product-search-wrap{ margin:24px 0 4px; }
+.product-search{
+  display:flex; align-items:center; gap:10px; background:#fff; border:1.5px solid var(--line);
+  border-radius:999px; padding:12px 18px; max-width:560px; box-shadow:var(--shadow);
+}
+.product-search svg{ width:19px; height:19px; color:var(--ink-soft); flex-shrink:0; }
+.product-search input{
+  border:none; outline:none; font-family:inherit; font-size:15px; width:100%; background:transparent; color:var(--ink);
+}
+.product-search input::placeholder{ color:#9aa8a4; }
+.search-help{ font-size:13.5px; color:var(--ink-soft); margin:10px 0 0; }
+.search-help a{ font-weight:700; }
+.search-empty{
+  font-size:14px; background:var(--maroon-soft); color:var(--maroon-dark); border-radius:10px;
+  padding:14px 16px; margin:14px 0 0; max-width:560px;
+}
+.search-empty a{ font-weight:700; color:var(--maroon-dark); text-decoration:underline; }
+.cat-block[hidden]{ display:none; }
+
+/* Category rotating banners — a slow crossfade of that category's own
+   product photos behind a brand-colour tint, so each catalogue section
+   opens with a glimpse of what's inside before the grid of cards. */
+.cat-banner{
+  position:relative; border-radius:16px; overflow:hidden; margin-bottom:20px;
+  min-height:128px; display:flex; align-items:flex-end;
+}
+.cat-banner-bg{ position:absolute; inset:0; }
+.cat-banner-bg span{
+  position:absolute; inset:0; background-size:cover; background-position:center;
+  opacity:0; animation-name:cat-rotate; animation-timing-function:ease-in-out; animation-iteration-count:infinite;
+}
+.cat-banner::after{ content:""; position:absolute; inset:0; }
+.cat-banner.chemicals::after{ background:linear-gradient(0deg, rgba(152,2,3,0.90) 0%, rgba(152,2,3,0.45) 65%, rgba(152,2,3,0.25) 100%); }
+.cat-banner.matting::after{ background:linear-gradient(0deg, rgba(1,130,132,0.90) 0%, rgba(1,130,132,0.45) 65%, rgba(1,130,132,0.25) 100%); }
+.cat-banner.equipment::after{ background:linear-gradient(0deg, rgba(58,76,199,0.90) 0%, rgba(58,76,199,0.45) 65%, rgba(58,76,199,0.25) 100%); }
+.cat-banner-inner{
+  position:relative; z-index:2; padding:18px 22px; display:flex; align-items:baseline;
+  justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;
+}
+.cat-banner-inner .cat-band{ background:transparent; padding:0; font-size:21px; letter-spacing:.02em; }
+.cat-banner-inner .count{ font-size:13.5px; color:#fff; opacity:0.92; font-weight:600; }
+@keyframes cat-rotate{
+  0%{ opacity:0; }
+  6%{ opacity:1; }
+  34%{ opacity:1; }
+  42%{ opacity:0; }
+  100%{ opacity:0; }
+}
+@media (prefers-reduced-motion: reduce){
+  .cat-banner-bg span{ animation:none; opacity:0; }
+  .cat-banner-bg span:first-child{ opacity:1; }
+}
+
+.cat-block{ padding-top:26px; }
+.cat-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:18px; }
+.cat-head .count{ font-size:13.5px; color:var(--ink-soft); }
+.cat-band{
+  display:inline-block; padding:6px 16px; border-radius:8px; color:#fff; font-family:"Manrope",sans-serif;
+  font-weight:800; font-size:14px; letter-spacing:.03em; text-transform:uppercase;
+}
+.cat-band.chemicals{ background:var(--maroon); }
+.cat-band.matting{ background:var(--teal); }
+.cat-band.equipment{ background:#3A4CC7; }
+
+/* Category quick-nav (tabs) */
+.cat-tabs{ display:flex; gap:10px; flex-wrap:wrap; margin:26px 0 6px; position:sticky; top:66px; z-index:20; background:var(--bg); padding:10px 0; }
+.cat-tabs a{
+  background:#fff; border:1.5px solid var(--line); border-radius:999px; padding:8px 16px;
+  font-weight:700; font-size:14px; color:var(--ink);
+}
+.cat-tabs a:hover{ border-color:var(--teal); color:var(--teal); text-decoration:none; }
+
+/* About */
+.about-block{ display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
+@media (max-width:860px){ .about-block{ grid-template-columns:1fr; } }
+.quote-strip{
+  background:var(--teal); color:#fff; border-radius:var(--radius); padding:28px 30px;
+}
+.quote-strip p{ color:#EAFAFA; font-size:17px; margin:0; }
+.quote-strip b{ color:#fff; }
+
+/* Contact */
+.contact-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:36px; align-items:start; }
+@media (max-width:860px){ .contact-grid{ grid-template-columns:1fr; } }
+.contact-card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:26px; }
+.contact-row{ display:flex; align-items:flex-start; gap:14px; padding:14px 0; border-bottom:1px solid var(--line); }
+.contact-row:last-child{ border-bottom:none; }
+.contact-row .icon{ width:38px; height:38px; border-radius:10px; background:var(--teal-soft); color:var(--teal); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.contact-row .icon svg{ width:19px; height:19px; }
+.contact-row .label{ font-size:12.5px; text-transform:uppercase; letter-spacing:.05em; color:#7c8b87; font-weight:700; margin-bottom:2px; }
+.contact-row .value{ font-weight:700; font-size:15.5px; }
+.contact-row .value a{ color:var(--ink); }
+.contact-row .value a:hover{ color:var(--teal); }
+
+form.enquiry{ display:grid; gap:14px; }
+form.enquiry label{ font-size:13.5px; font-weight:700; margin-bottom:6px; display:block; }
+form.enquiry input, form.enquiry select, form.enquiry textarea{
+  width:100%; padding:11px 13px; border-radius:10px; border:1.5px solid var(--line);
+  font-family:inherit; font-size:15px; background:#fff; color:var(--ink);
+}
+form.enquiry input:focus, form.enquiry select:focus, form.enquiry textarea:focus{
+  outline:none; border-color:var(--teal); box-shadow:0 0 0 3px var(--teal-soft);
+}
+form.enquiry textarea{ min-height:120px; resize:vertical; }
+.form-row-2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media (max-width:560px){ .form-row-2{ grid-template-columns:1fr; } }
+.form-note{ font-size:12.5px; color:#7c8b87; margin-top:2px; }
+.form-status{ font-size:14px; font-weight:700; padding:10px 14px; border-radius:10px; display:none; }
+.form-status.show{ display:block; }
+.form-status.ok{ background:#E4F3E9; color:#1D7A3E; }
+.form-status.err{ background:var(--maroon-soft); color:var(--maroon); }
+
+/* CTA band */
+.cta-band{
+  background:linear-gradient(120deg, var(--teal) 0%, var(--teal-dark) 100%);
+  color:#fff; border-radius:20px; padding:40px; text-align:center;
+}
+.cta-band h2{ color:#fff; }
+.cta-band p{ color:#DFF6F6; }
+.cta-band .btn-row{ justify-content:center; }
+.cta-band .btn.ghost{ background:#fff; color:var(--teal-dark); border-color:#fff; }
+.cta-band .btn.outline{ border-color:#fff; color:#fff; }
+.cta-band .btn.outline:hover{ background:rgba(255,255,255,0.12); }
+
+/* Footer */
+footer#site-footer{ background:#0F1D1B; color:#CBD8D5; padding:48px 0 24px; margin-top:40px; }
+footer .foot-grid{ display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:32px; }
+@media (max-width:760px){ footer .foot-grid{ grid-template-columns:1fr; } }
+footer .brandmark .name{ color:#fff; }
+footer h4{ color:#fff; font-size:13.5px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:14px; }
+footer a{ color:#B9CAC6; }
+footer a:hover{ color:#fff; }
+footer li{ margin-bottom:9px; font-size:14.5px; }
+.foot-bottom{ border-top:1px solid #223330; margin-top:32px; padding-top:20px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:13px; color:#8FA29E; }
+
+/* WhatsApp floating button */
+.wa-float{
+  position:fixed; right:20px; bottom:20px; z-index:60; width:56px; height:56px; border-radius:50%;
+  background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(0,0,0,0.22);
+}
+.wa-float svg{ width:28px; height:28px; fill:#fff; }
+.wa-float:hover{ transform:scale(1.06); }
+
+/* Utility */
+.mt-0{ margin-top:0; } .mb-0{ margin-bottom:0; }
+.muted{ color:var(--ink-soft); }
+.small{ font-size:13.5px; }
