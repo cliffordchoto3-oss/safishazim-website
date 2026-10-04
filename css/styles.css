@@ -182,6 +182,17 @@ nav.mainnav a:hover{ color:var(--teal); text-decoration:none; }
 .hero-art img{ width:clamp(92px, 15vw, 150px); height:auto; aspect-ratio:1/1; }
 .hero-art .swatch-row{ display:flex; gap:10px; }
 .hero-art .swatch{ width:26px; height:26px; border-radius:50%; }
+/* Below 900px, .hero-grid drops to a single column, so .hero-art stretches
+   to the full container width and the desktop "small side badge" reads as
+   an oversized, disconnected panel instead. Cap it back to a compact,
+   centered card and shrink the logo/text to match. */
+@media (max-width:900px){
+  .hero-art{ max-width:280px; margin:0 auto; padding:20px; gap:12px; border-radius:20px; }
+  .hero-art img{ width:clamp(64px, 18vw, 96px); }
+  .hero-art h3{ font-size:1.05rem; margin-bottom:2px !important; }
+  .hero-art .small{ font-size:12.5px; }
+  .hero-art .swatch{ width:20px; height:20px; }
+}
 
 /* Waving logo — the SVG filter (defined inline next to the image) supplies
    the cloth-like ripple; this adds a slow, gentle sway on top so the whole
