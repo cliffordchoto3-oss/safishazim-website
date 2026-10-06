@@ -255,16 +255,17 @@ nav.mainnav a:hover{ color:var(--teal); text-decoration:none; }
 }
 .product-card:hover{ box-shadow:var(--shadow); transform:translateY(-2px); }
 .product-img-wrap{
-  /* Most product photos (mop heads, dispensers, bottles, the vacuum, etc.)
-     are portrait-shaped, not landscape — a 4:3 (landscape) frame forced
-     them to shrink way down to fit the width, leaving huge empty strips on
-     either side ("halved" look), worst on the Matting/Equipment categories
-     where the narrowest photos live. 3:4 (portrait) matches the catalogue's
-     actual photos far better: measured across every product photo, it
-     roughly doubles the worst-case fill and lifts the average fill from
-     ~60% to ~83% of the frame, with no image edits needed. */
+  /* No single fixed box shape fits the whole catalogue: bottles/canisters
+     are portrait (~0.75-0.9), but broom/mop handles and roll dispensers
+     are much narrower (~0.4-0.55) and mats/scrapers/rails are landscape
+     (~1.1-1.4). A fixed 3:4 box suited the bottles but left the narrow and
+     wide items floating with huge empty margins. js/main.js now measures
+     each photo's own width/height once it loads and sets --img-ar on this
+     element (clamped to 0.55-1.3 so grid rows never get extreme), so each
+     frame hugs its own photo instead of one-size-fits-all. 3/4 below is
+     only the fallback before JS runs / if it's unavailable. */
   margin:-18px -18px 14px; border-radius:12px 12px 0 0; overflow:hidden;
-  background:#fff; aspect-ratio:3/4; display:flex; align-items:center; justify-content:center;
+  background:#fff; aspect-ratio:var(--img-ar, 3/4); display:flex; align-items:center; justify-content:center;
   border-bottom:1px solid var(--line);
 }
 .product-img{ width:100%; height:100%; object-fit:contain; object-position:center; padding:10px; }
