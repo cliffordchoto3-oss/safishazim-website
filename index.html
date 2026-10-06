@@ -12,19 +12,31 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/styles.css">
+<link rel="canonical" href="https://safishazim.com/">
 <meta property="og:title" content="Safisha Industries — Hygiene, a fraction of health">
 <meta property="og:description" content="Safisha Industries supplies cleaning chemicals, matting and hygiene equipment &amp; machinery to homes, offices, clinics and industry across Zimbabwe.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="/assets/logo-original.png">
+<meta property="og:url" content="https://safishazim.com/">
+<meta property="og:image" content="https://safishazim.com/assets/logo-original.png">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": "LocalBusiness",
+  "@id": "https://safishazim.com/#organization",
   "name": "Safisha Industries",
+  "alternateName": "Safisha Industries Pvt Ltd",
   "description": "Cleaning chemicals, matting and hygiene equipment supplier in Zimbabwe.",
+  "url": "https://safishazim.com/",
+  "logo": "https://safishazim.com/assets/logo.png",
+  "image": "https://safishazim.com/assets/logo-original.png",
   "email": "sales@safisha.co.zw",
   "telephone": "+263 772 164 975",
-  "slogan": "Hygiene, a fraction of health"
+  "slogan": "Hygiene, a fraction of health",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Harare",
+    "addressCountry": "ZW"
+  }
 }
 </script>
 </head>
@@ -36,7 +48,7 @@
       <img src="/assets/logo.png" alt="Safisha Industries logo">
       <span>
         <span class="name">Safisha Industries</span><br>
-        <span class="tag">Hygiene, a fraction of health</span>
+        <span class="tag">Hygiene, a fraction of health <em class="shine-inline">&middot; Shine With Safisha.</em></span>
       </span>
     </a>
     <nav class="mainnav" aria-label="Primary">
@@ -205,21 +217,26 @@
       </div>
     </div>
     <div class="hero-art">
-      <!-- Hidden SVG filter that gives the logo a cloth-like ripple — the
-           feTurbulence animates continuously, feDisplacementMap uses that
-           noise to warp the image, so the S (and badge) gently wave like a
-           flag rather than sitting static. -->
+      <!-- Hidden SVG filter that gives the logo a cloth-like ripple. The
+           feDisplacementMap warps the image using a noise field, so the S
+           (and badge) gently wave like a flag rather than sitting static.
+
+           Earlier version animated feTurbulence's own baseFrequency, which
+           re-generates the ENTIRE noise field every frame — the pattern
+           doesn't travel, it gets re-randomized, which reads as shimmer/
+           static rather than a wave. Fix: generate the noise field once
+           (feTurbulence is static below, no <animate> on it) and instead
+           animate a feOffset downstream, sliding that same fixed pattern
+           sideways. Same pixels, just moving — a real traveling ripple,
+           and a low x-frequency keeps the bands large and even rather than
+           fine/fuzzy. -->
       <svg width="0" height="0" style="position:absolute;" aria-hidden="true" focusable="false">
         <filter id="wave-flag" x="-30%" y="-30%" width="160%" height="160%">
-          <!-- Low x-frequency + higher, fixed y-frequency = a few broad
-               horizontal bands rather than fine noise, which is what reads
-               as cloth "flapping" instead of a shimmering texture. Only the
-               x-frequency animates, so the bands stay the same tightness and
-               just roll slowly across the badge like a real ripple. -->
-          <feTurbulence id="wave-turb" type="fractalNoise" numOctaves="1" seed="7" baseFrequency="0.006 0.09" result="wave-noise">
-            <animate id="wave-turb-anim" attributeName="baseFrequency" dur="4s" values="0.005 0.09;0.008 0.09;0.005 0.09" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" keyTimes="0;0.5;1" />
-          </feTurbulence>
-          <feDisplacementMap id="wave-disp" in="SourceGraphic" in2="wave-noise" scale="18" xChannelSelector="R" yChannelSelector="G" />
+          <feTurbulence id="wave-turb" type="fractalNoise" numOctaves="2" seed="7" baseFrequency="0.006 0.045" result="wave-noise" />
+          <feOffset id="wave-offset" in="wave-noise" dx="0" dy="0" result="wave-noise-shifted">
+            <animate id="wave-offset-anim" attributeName="dx" dur="7s" values="-32;32;-32" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" keyTimes="0;0.5;1" />
+          </feOffset>
+          <feDisplacementMap id="wave-disp" in="SourceGraphic" in2="wave-noise-shifted" scale="16" xChannelSelector="R" yChannelSelector="G" />
         </filter>
       </svg>
       <a href="/" aria-label="Safisha Industries home">
@@ -325,7 +342,7 @@
           <img src="/assets/logo.png" alt="Safisha Industries logo">
           <span>
             <span class="name">Safisha Industries</span><br>
-            <span class="tag" style="color:#8FA29E;">Hygiene, a fraction of health</span>
+            <span class="tag" style="color:#8FA29E;">Hygiene, a fraction of health <em class="shine-inline">&middot; Shine With Safisha.</em></span>
           </span>
         </div>
         <p style="color:#9FB0AC; font-size:14px; max-width:320px;">
@@ -348,7 +365,7 @@
         <h4>Get in touch</h4>
         <ul>
           <li><a href="tel:+263772164975">Sales: +263 772 164 975</a></li>
-          <li><a href="tel:+2638644285935">Sales: +263 8644 285935</a></li>
+          <li><a href="tel:+2638644041989">Sales: +263 8644 041989</a></li>
           <li><a href="mailto:sales@safisha.co.zw">sales@safisha.co.zw</a></li>
           <li><a href="https://wa.me/263772164975" target="_blank" rel="noopener">Chat on WhatsApp</a></li>
         </ul>
