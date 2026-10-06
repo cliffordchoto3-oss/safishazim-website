@@ -91,6 +91,7 @@ header#site-header{
 .brandmark img{ width:40px; height:40px; border-radius:50%; }
 .brandmark .name{ font-family:"Manrope",sans-serif; font-weight:800; font-size:18px; line-height:1.1; color:var(--ink); }
 .brandmark .tag{ font-size:11.5px; color:var(--maroon); font-weight:600; letter-spacing:.01em; }
+.shine-inline{ font-style:italic; font-weight:600; opacity:.82; white-space:nowrap; }
 nav.mainnav{ display:flex; align-items:center; gap:28px; }
 nav.mainnav a{ color:var(--ink); font-weight:600; font-size:15px; }
 nav.mainnav a.active{ color:var(--teal); }
@@ -199,7 +200,7 @@ nav.mainnav a:hover{ color:var(--teal); text-decoration:none; }
    badge reads as a flag moving in the breeze, not just a rippling texture. */
 .hero-logo-wave{
   filter:url(#wave-flag);
-  animation:flag-sway 4s ease-in-out infinite;
+  animation:flag-sway 7s ease-in-out infinite; /* matches the 7s SVG ripple cycle in index.html */
   transform-origin:38% 50%;
 }
 @keyframes flag-sway{
@@ -254,11 +255,19 @@ nav.mainnav a:hover{ color:var(--teal); text-decoration:none; }
 }
 .product-card:hover{ box-shadow:var(--shadow); transform:translateY(-2px); }
 .product-img-wrap{
+  /* Most product photos (mop heads, dispensers, bottles, the vacuum, etc.)
+     are portrait-shaped, not landscape — a 4:3 (landscape) frame forced
+     them to shrink way down to fit the width, leaving huge empty strips on
+     either side ("halved" look), worst on the Matting/Equipment categories
+     where the narrowest photos live. 3:4 (portrait) matches the catalogue's
+     actual photos far better: measured across every product photo, it
+     roughly doubles the worst-case fill and lifts the average fill from
+     ~60% to ~83% of the frame, with no image edits needed. */
   margin:-18px -18px 14px; border-radius:12px 12px 0 0; overflow:hidden;
-  background:#fff; aspect-ratio:4/3; display:flex; align-items:center; justify-content:center;
+  background:#fff; aspect-ratio:3/4; display:flex; align-items:center; justify-content:center;
   border-bottom:1px solid var(--line);
 }
-.product-img{ width:100%; height:100%; object-fit:contain; object-position:center; padding:8px; }
+.product-img{ width:100%; height:100%; object-fit:contain; object-position:center; padding:10px; }
 .product-card h4{
   font-family:"Manrope",sans-serif; font-weight:800; font-size:14.5px; letter-spacing:.01em;
   color:var(--teal-dark); text-transform:uppercase; margin:0 0 8px;
@@ -405,13 +414,24 @@ footer li{ margin-bottom:9px; font-size:14.5px; }
 
 /* WhatsApp floating button */
 .wa-float{
-  position:fixed; right:20px; bottom:20px; z-index:60; width:56px; height:56px; border-radius:50%;
+  /* Netlify's own "Powered by Netlify" badge (injected by Netlify itself,
+     outside this codebase — see Project configuration > General > Powered
+     by Netlify badge in the Netlify dashboard to turn it off) sits fixed
+     in the same bottom-right corner. Lifted well clear of it here rather
+     than overlapping. */
+  position:fixed; right:20px; bottom:92px; z-index:60; width:56px; height:56px; border-radius:50%;
   background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(0,0,0,0.22);
 }
 .wa-float svg{ width:28px; height:28px; fill:#fff; }
 .wa-float:hover{ transform:scale(1.06); }
+@media (max-width:480px){
+  .wa-float{ bottom:84px; right:16px; width:50px; height:50px; }
+  .wa-float svg{ width:25px; height:25px; }
+}
 
 /* Utility */
 .mt-0{ margin-top:0; } .mb-0{ margin-bottom:0; }
 .muted{ color:var(--ink-soft); }
 .small{ font-size:13.5px; }
+
+/* redeploy trigger: mobile hero-art fix */
