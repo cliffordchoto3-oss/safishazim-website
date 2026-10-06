@@ -104,32 +104,32 @@ document.addEventListener("DOMContentLoaded", function () {
   // on desktop, instead of looking too jittery or too flat.
   var waveLogo = document.querySelector(".hero-logo-wave");
   var waveTurb = document.getElementById("wave-turb");
-  var waveTurbAnim = document.getElementById("wave-turb-anim");
+  var waveOffsetAnim = document.getElementById("wave-offset-anim");
   var waveDisp = document.getElementById("wave-disp");
-  if (waveLogo && waveTurb && waveTurbAnim && waveDisp) {
-    // Reference values below were tuned at this logo width (px).
+  if (waveLogo && waveTurb && waveOffsetAnim && waveDisp) {
+    // Reference values below were tuned at this logo width (px). The noise
+    // field itself (baseFrequency) is static — only the feOffset's dx is
+    // animated (in index.html), sliding that fixed pattern sideways for a
+    // real traveling ripple instead of a shimmering re-randomized texture.
     var BASE_W = 150;
-    var FREQ_X_LO = 0.005 * BASE_W; // cycles across the whole width
-    var FREQ_X_HI = 0.008 * BASE_W;
-    var FREQ_Y = 0.09 * BASE_W;
-    var DISPLACEMENT_RATIO = 18 / BASE_W; // px of displacement per px of logo width
+    var FREQ_X = 0.006 * BASE_W; // cycles across the whole width — low = large, even bands
+    var FREQ_Y = 0.045 * BASE_W;
+    var OFFSET_AMPLITUDE_RATIO = 32 / BASE_W; // px the pattern slides, per px of logo width
+    var DISPLACEMENT_RATIO = 16 / BASE_W; // px of displacement per px of logo width
 
     var applyTuning = function (w) {
       if (!w) return;
-      var fxLo = FREQ_X_LO / w;
-      var fxHi = FREQ_X_HI / w;
+      var fx = FREQ_X / w;
       var fy = FREQ_Y / w;
+      var amp = Math.round(OFFSET_AMPLITUDE_RATIO * w);
       var scale = DISPLACEMENT_RATIO * w;
-      waveTurb.setAttribute("baseFrequency", fxLo + " " + fy);
-      waveTurbAnim.setAttribute(
-        "values",
-        fxLo + " " + fy + ";" + fxHi + " " + fy + ";" + fxLo + " " + fy
-      );
+      waveTurb.setAttribute("baseFrequency", fx + " " + fy);
+      waveOffsetAnim.setAttribute("values", -amp + ";" + amp + ";" + -amp);
       waveDisp.setAttribute("scale", scale);
       // Restart the SMIL animation so it picks up the new values cleanly.
-      if (typeof waveTurbAnim.beginElement === "function") {
+      if (typeof waveOffsetAnim.beginElement === "function") {
         try {
-          waveTurbAnim.beginElement();
+          waveOffsetAnim.beginElement();
         } catch (e) {
           /* SMIL restart isn't supported everywhere — safe to ignore. */
         }
