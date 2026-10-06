@@ -96,6 +96,36 @@ document.addEventListener("DOMContentLoaded", function () {
     searchInput.addEventListener("input", runSearch);
   }
 
+  // Product photo framing (products.html) — the catalogue's photos aren't
+  // all one shape: bottles/canisters are portrait, but broom/mop handles
+  // and roll dispensers are much narrower, and mats/scrapers/rails are
+  // landscape. Forcing every photo into the same fixed box left the narrow
+  // and wide ones shrunk down with huge empty margins. Instead, measure
+  // each photo's own width/height once it's loaded and let its frame
+  // (.product-img-wrap, via the --img-ar custom property in styles.css)
+  // hug that shape — clamped to a sane range so grid rows never get
+  // stretched to extremes by one unusually narrow or wide photo.
+  var productPhotos = document.querySelectorAll(".product-img-wrap img");
+  if (productPhotos.length) {
+    var MIN_PHOTO_RATIO = 0.55;
+    var MAX_PHOTO_RATIO = 1.3;
+    var applyPhotoRatio = function (img) {
+      if (!img.naturalWidth || !img.naturalHeight) return;
+      var ratio = img.naturalWidth / img.naturalHeight;
+      ratio = Math.max(MIN_PHOTO_RATIO, Math.min(MAX_PHOTO_RATIO, ratio));
+      if (img.parentElement) {
+        img.parentElement.style.setProperty("--img-ar", ratio);
+      }
+    };
+    productPhotos.forEach(function (img) {
+      if (img.complete) {
+        applyPhotoRatio(img);
+      } else {
+        img.addEventListener("load", function () { applyPhotoRatio(img); });
+      }
+    });
+  }
+
   // Waving logo (index.php hero) — the SVG ripple filter's frequency/
   // displacement were hand-tuned for a 150px logo. The logo itself is now
   // fluid-sized (CSS clamp), so re-scale those filter values to match its
